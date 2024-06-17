@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Modify Entry</title>
+    <link rel="stylesheet" href="your_styles.css"> <!-- Add your CSS styles here -->
+</head>
+<body>
+    <h1>Modify Entry</h1>
+    
+    <form method="POST">
+        <label for="dropout_count">Dropout Count:</label>
+        <input type="number" id="dropout_count" name="dropout_count" value="{{ entry.dropout_count }}" required>
+        <br>
+        
+        <label for="total_students">Total Students:</label>
+        <input type="number" id="total_students" name="total_students" value="{{ entry.total_students }}" required>
+        <br>
+        
+        <input type="submit" value="Update Entry">
+    </form>
+
+    <br>
+
+    <a href="{{ url_for('user_dashboard') }}">Back to User Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link class="icon" rel="icon" href="static/india.png" type="jpg" />
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Assistant:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="static/styleforlogin.css">
+    <style>
+        body {
+          background-image: linear-gradient(
+              rgba(4, 9, 30, 0.6),
+              rgba(4, 9, 30, 0.6)
+            ),
+            url("{{ url_for('static', filename='login.jpg') }}");
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <a href="index.html"><img src="static/india.png" alt="logo" /></a>
+        <p>
+          School of Management for Government Schools<br />Government of Gujarat , India
+        </p>
+    </div>
+    <div class="login" id="login">
+
+        <div class='head'>
+            <h1 class='company'>Login Page</h1>
+        </div>
+        <p class='msg'>Welcome back</p>
+        <div class='form'>
+            <form method="POST" action="/" >
+                <input type="text"class='text'placeholder='Username' name="username" required /><br />
+                <input type="password"class='password' placeholder='••••••••••••••' name="password" required /><br />
+                <input type="submit" class='btn-login' value="Login" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dropout Analysis</title>
+    <link class="icon" rel="icon" href="static/india.png" type="jpg" />
+    
+    <link rel="stylesheet" href="static/stylesforuserdashboard.css" />
+    <style>
+      body {
+          background-image: linear-gradient(
+              rgba(4, 9, 30, 0.6),
+              rgba(4, 9, 30, 0.6)
+            ),
+            url("{{ url_for('static', filename='login.jpg') }}");
+        }
+    </style>
+  </head>
+  <body>
+      <div class="title">
+        <a href="index.html"><img src="static/india.png" alt="logo" /></a>
+        <p>
+          school of Management for Government Schools<br />Government of Gujarat , India
+        </p>
+      </div>
+    <div class="container">
+      <h1 class="head">Dropout Analysis</h1>
+      <form class="form" method="POST" action="/update">
+        <label for="category">Category:</label>
+        <select name="category" id="categorySelect" required>
+          <option value="school">School-wise</option>
+          <option value="area">Area-wise</option>
+          <option value="gender">Gender-wise</option>
+          <option value="caste">Caste-wise</option>
+          <option value="age_standard">Age/Standard-wise</option>
+        </select>
+        <label for="subcategory">Subcategory:</label>
+        <input type="text" name="subcategory" id="subcategoryInput" required />
+        <label for="dropout_count">Dropout Count:</label>
+        <input type="number" name="dropout_count" required />
+        <label for="total_students">Total Students:</label>
+        <input type="number" name="total_students" required />
+        <input id="l" class="k" type="submit" value="Update Data" />
+      </form>
+      <h2 class="space">School-wise Dropout Analysis</h2>
+      <ul>
+        {% for school, data in dropout_data['school'].items() %}
+        <li>
+          {{ school }}: {{ data['dropout_count'] }} out of {{
+          data['total_students'] }} ({{ data['dropout_count'] /
+          data['total_students'] * 100 if data['total_students'] > 0 else 0 }}%)
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h2>Area-wise Dropout Analysis</h2>
+      <ul>
+        {% for area, data in dropout_data['area'].items() %}
+        <li>
+          {{ area }}: {{ data['dropout_count'] }} out of {{
+          data['total_students'] }} ({{ data['dropout_count'] /
+          data['total_students'] * 100 if data['total_students'] > 0 else 0 }}%)
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h2>Gender-wise Dropout Analysis</h2>
+      <ul>
+        {% for gender, data in dropout_data['gender'].items() %}
+        <li>
+          {{ gender }}: {{ data['dropout_count'] }} out of {{
+          data['total_students'] }} ({{ data['dropout_count'] /
+          data['total_students'] * 100 if data['total_students'] > 0 else 0 }}%)
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h2>Caste-wise Dropout Analysis</h2>
+      <ul>
+        {% for caste, data in dropout_data['caste'].items() %}
+        <li>
+          {{ caste }}: {{ data['dropout_count'] }} out of {{
+          data['total_students'] }} ({{ data['dropout_count'] /
+          data['total_students'] * 100 if data['total_students'] > 0 else 0 }}%)
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h2>Age/Standard-wise Dropout Analysis</h2>
+      <ul>
+        {% for age_standard, data in dropout_data['age_standard'].items() %}
+        <li>
+          {{ age_standard }}: {{ data['dropout_count'] }} out of {{
+          data['total_students'] }} ({{ data['dropout_count'] /
+          data['total_students'] * 100 if data['total_students'] > 0 else 0 }}%)
+        </li>
+        {% endfor %}
+        <div class="modify-section">
+          <h2>Modify Entries</h2>
+          <ul>
+            {% for category, subcategories in dropout_data.items() %}
+              {% for subcategory, data in subcategories.items() %}
+                <li class="modify-entry">
+                  {{ category }} - {{ subcategory }}:
+                  <span class="entry-info">
+                    Dropout Count: {{ data['dropout_count'] }},
+                    Total Students: {{ data['total_students'] }}
+                  </span>
+                  <form method="POST" action="{{ url_for('modify_entry', category=category, subcategory=subcategory) }}" class="modify-form">
+                    <label for="updated_dropout_count">Updated Dropout Count:</label>
+                    <input type="number" name="updated_dropout_count" required />
+                    <label for="updated_total_students">Updated Total Students:</label>
+                    <input type="number" name="updated_total_students" required />
+                    <input type="submit" value="Modify" />
+                  </form>
+                </li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+        
+    </div>
+</html>

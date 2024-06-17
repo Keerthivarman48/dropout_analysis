@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin-Login</title>
+    <link class="icon" rel="icon" href="static/india.png" type="jpg" />
+    <link rel="stylesheet" href="static/stylesforadmindashboard.css" />
+    <style>
+  
+      body {
+          background-image: linear-gradient(
+              rgba(4, 9, 30, 0.6),
+              rgba(4, 9, 30, 0.6)
+            ),
+            url("{{ url_for('static', filename='login.jpg') }}");
+        }
+    </style>
+
+    <!-- Include necessary Plotly.js library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Plot Selection Dropdown -->
+    <div class="chart-selection">
+      <label for="plot-type">Select Plot Type:</label>
+      <select id="plot-type" onchange="updateChart()">
+        <option value="pie">Pie Chart</option>
+        <option value="bar">Bar Chart</option>
+        <option value="line">Line Chart</option>
+        <option value="scatter">Scatter Plot</option>
+      </select>
+    </div>
+
+    <!-- Chart Containers -->
+    <div id="pie-chart"></div>
+    <div id="bar-chart"></div>
+    <div id="line-chart"></div>
+    <div id="scatter-plot"></div>
+
+    <!-- JavaScript to render charts -->
+    <script>
+      // Retrieve chart data from Flask
+      var pieChart = JSON.parse('{{ pie_chart_data | tojson | safe }}');
+      var barChart = JSON.parse('{{ bar_chart_data | tojson | safe }}');
+      var lineChart = JSON.parse('{{ line_chart_data | tojson | safe }}');
+      var scatterPlot = JSON.parse('{{ scatter_plot_data | tojson | safe }}');
+
+      // Create pie chart by default
+      Plotly.newPlot('pie-chart', pieChart);
+
+      // Function to update the selected chart
+      function updateChart() {
+        var plotType = document.getElementById('plot-type').value;
+
+        // Hide all chart containers
+        document.getElementById('pie-chart').style.display = 'none';
+        document.getElementById('bar-chart').style.display = 'none';
+        document.getElementById('line-chart').style.display = 'none';
+        document.getElementById('scatter-plot').style.display = 'none';
+
+        // Show the selected chart container
+        document.getElementById(plotType + '-chart').style.display = 'block';
+
+        // Render the selected chart
+        switch (plotType) {
+          case 'pie':
+            Plotly.newPlot('pie-chart', pieChart);
+            break;
+          case 'bar':
+            Plotly.newPlot('bar-chart', barChart);
+            break;
+          case 'line':
+            Plotly.newPlot('line-chart', lineChart);
+            break;
+          case 'scatter':
+            Plotly.newPlot('scatter-plot', scatterPlot);
+            break;
+          default:
+            break;
+        }
+      }
+
+      // Call updateChart on page load to display the default chart
+      updateChart();
+    </script>
+  </body>
+</html>
